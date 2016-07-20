@@ -26,12 +26,12 @@ let buildReceiptItems=(cartItems,promotions)=>{
     let {subtotal,saved}=discount(cartItem,promotionType);
     return {cartItem,subtotal,saved};
   })
-}
+};
 let getPromotionType=(barcode,promotions)=>{
   let promotion=promotions.find(promotion=>promotion.barcodes.includes(barcode));
   return promotion?promotion.type:'';
 
-}
+};
 let discount=(cartItem,promotionType)=>{
   let freeItemCount=0;
   let freeItemPrice=cartItem.item.price;
@@ -45,4 +45,13 @@ let discount=(cartItem,promotionType)=>{
   let saved=freeItemPrice*freeItemCount;
   let subtotal=cartItem.item.price*cartItem.count-saved;
   return{subtotal,saved};
-}
+};
+let buildItemsTotal=(cartItems)=>{
+  let total=0;
+  let saveTotal=0;
+  for(let cartItem of cartItems){
+    total+=cartItem.subtotal;
+    saveTotal+=cartItem.saved;
+  }
+  return {cartItems:cartItems,total,saveTotal};
+};

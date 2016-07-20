@@ -100,4 +100,46 @@ describe('pos', () => {
             }];
         expect(itemsSubtotal).toEqual(expectItems);
     });
+    it('should calculate items total', ()=> {
+        let itemsSubtotal = buildReceiptItems(buildItemsCount(allItems, inputs), promotions);
+        let itemsTotal = buildItemsTotal(itemsSubtotal);
+        const expectItems = {
+            cartItems:[
+                {
+                    cartItem:{
+                        item:  {
+                            barcode: 'ITEM000001',
+                            name: '雪碧',
+                            unit: '瓶',
+                            price: 3.00},
+                        count:5},
+                    subtotal:12.00,
+                    saved:3.00
+                },
+                {
+                    cartItem:{
+                        item:{
+                            barcode: 'ITEM000003',
+                            name: '荔枝',
+                            unit: '斤',
+                            price: 15.00},
+                        count:2},
+                    subtotal:28.50,
+                    saved:1.50
+                },
+                {
+                    cartItem:{
+                        item:{     barcode: 'ITEM000005',
+                            name: '方便面',
+                            unit: '袋',
+                            price: 4.50},
+                        count:3},
+                    subtotal:9.00,
+                    saved:4.50
+                }],
+            total: 49.50,
+            saveTotal: 9.00
+        };
+        expect(itemsTotal).toEqual(expectItems);
+    });
 });
