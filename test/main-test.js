@@ -63,5 +63,41 @@ describe('pos', () => {
               count:3}];
     expect(itemscount).toEqual(expectItems);
   });
- 
+    it('should calculate items subtotal',()=>{
+        let itemsSubtotal=buildReceiptItems(buildItemsCount(allItems, inputs),promotions);
+        const expectItems=[
+            {
+                cartItem:{
+                    item:  {
+                        barcode: 'ITEM000001',
+                        name: '雪碧',
+                        unit: '瓶',
+                        price: 3.00},
+                    count:5},
+                subtotal:12.00,
+                saved:3.00
+            },
+            {
+                cartItem:{
+                    item:{
+                        barcode: 'ITEM000003',
+                        name: '荔枝',
+                        unit: '斤',
+                        price: 15.00},
+                    count:2},
+                subtotal:28.50,
+                saved:1.50
+            },
+            {
+                cartItem:{
+                    item:{     barcode: 'ITEM000005',
+                        name: '方便面',
+                        unit: '袋',
+                        price: 4.50},
+                    count:3},
+                subtotal:9.00,
+                saved:4.50
+            }];
+        expect(itemsSubtotal).toEqual(expectItems);
+    });
 });

@@ -20,3 +20,29 @@ let buildItemsCount=(allItems,inputs)=>{
   }
   return cartItems;
 };
+let buildReceiptItems=(cartItems,promotions)=>{
+  return cartItems.map(cartItem=>{
+    let promotionType=getPromotionType(cartItem.item.barcode,promotions);
+    let {subtotal,saved}=discount(cartItem,promotionType);
+    return {cartItem,subtotal,saved};
+  })
+}
+let getPromotionType=(barcode,promotions)=>{
+  let promotion=promotions.find(promotion=>promotion.barcodes.includes(barcode));
+  return promotion?promotion.type:'';
+
+}
+let discount=(cartItem,promotionType)=>{
+  let freeItemCount=0;
+  let freeItemPrice=cartItem.item.price;
+  if(promotionType=="BUY_TWO_GET_ONE_FREE"){
+    freeItemCount=parseInt(cartItem.count/3);
+  }
+  else if(promotionType=="A_FIVE_PERCENT_DISCOUNT"){
+    freeItemPrice*=0.05;
+    freeItemCount=cartItem.count;
+  }
+  let saved=freeItemPrice*freeItemCount;
+  let subtotal=cartItem.item.price*cartItem.count-saved;
+  return{subtotal,saved};
+}

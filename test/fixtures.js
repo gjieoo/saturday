@@ -54,7 +54,7 @@ function loadPromotions() {
     {
       type: 'A_FIVE_PERCENT_DISCOUNT',
       barcodes: [
-        'ITEM000000',
+        'ITEM000001',
         'ITEM000002',
         'ITEM000003'
       ]
