@@ -28,11 +28,11 @@ describe('pos', () => {
 
     const expectText = `***<没钱赚商店>收据***
 名称：雪碧，数量：5瓶，单价：3.00(元)，小计：12.00(元)
-名称：荔枝，数量：2斤，单价：15.00(元)，小计：30.00(元)
+名称：荔枝，数量：2斤，单价：15.00(元)，小计：28.50(元)
 名称：方便面，数量：3袋，单价：4.50(元)，小计：9.00(元)
 ----------------------
-总计：51.00(元)
-节省：7.50(元)
+总计：49.50(元)
+节省：9.00(元)
 **********************`;
 
     expect(console.log).toHaveBeenCalledWith(expectText);
@@ -104,7 +104,7 @@ describe('pos', () => {
         let itemsSubtotal = buildReceiptItems(buildItemsCount(allItems, inputs), promotions);
         let itemsTotal = buildItemsTotal(itemsSubtotal);
         const expectItems = {
-            cartItems:[
+            receiptItems:[
                 {
                     cartItem:{
                         item:  {
@@ -141,5 +141,20 @@ describe('pos', () => {
             saveTotal: 9.00
         };
         expect(itemsTotal).toEqual(expectItems);
+    });
+    it('should print receipt itemInfo',()=>{
+        let itemsSubtotal = buildReceiptItems(buildItemsCount(allItems, inputs), promotions);
+        let itemsTotal = buildItemsTotal(itemsSubtotal);
+        let receiptInfo=buildReceiptText(itemsTotal);
+
+        const expectText=`***<没钱赚商店>收据***
+名称：雪碧，数量：5瓶，单价：3.00(元)，小计：12.00(元)
+名称：荔枝，数量：2斤，单价：15.00(元)，小计：28.50(元)
+名称：方便面，数量：3袋，单价：4.50(元)，小计：9.00(元)
+----------------------
+总计：49.50(元)
+节省：9.00(元)
+**********************`
+        expect(receiptInfo).toEqual(expectText);
     });
 });
